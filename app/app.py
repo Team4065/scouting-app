@@ -1,8 +1,9 @@
 from flask import Flask
 from markupsafe import escape
 import dotenv
+from app.database import db
 
-dotenv.load_dotenv() # Load environment variables from .env
+dotenv.load_dotenv('.env', verbose=True) # Load environment variables from .env
 
 app = Flask(__name__)
 
