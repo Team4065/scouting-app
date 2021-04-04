@@ -2,6 +2,8 @@
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+A live version of this project is available [here](https://nerds-of-prey-scouting-app.herokuapp.com/).
+
 ### Prerequisites
 
 python
@@ -15,6 +17,11 @@ python -m pip install virtualenv
 ```
 
 ### Installing
+
+Ensure that you are in the root folder of the project.
+```
+cd /path/to/root/
+```
 
 Create a new virtual environment
 ```
