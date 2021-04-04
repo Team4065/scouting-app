@@ -1,7 +1,7 @@
 import unittest
 
 class SimpleTest(unittest.TestCase):
-    def test(self):
+    def testFail(self):
         self.failUnless(False)
 
 if __name__ == '__main__':
