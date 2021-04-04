@@ -18,6 +18,11 @@ python -m pip install virtualenv
 
 ### Installing
 
+Clone this repository into your workspace
+```
+git clone https://github.com/Team4065/scouting-app.git
+```
+
 Ensure that you are in the root folder of the project.
 ```
 cd /path/to/root/
