@@ -2,7 +2,7 @@ from flask import Flask
 from markupsafe import escape
 import dotenv
 
-dotenv.load_dotenv()
+dotenv.load_dotenv() # Load environment variables from .env
 
 app = Flask(__name__)
 
