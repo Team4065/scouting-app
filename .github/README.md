@@ -30,7 +30,7 @@ cd /path/to/root/
 
 Create a new virtual environment
 ```
-virtualenv venv
+python -m virtualenv venv
 ```
 
 Activate virtualenv (Windows)
