@@ -52,8 +52,8 @@ See Heroku's deployment guide. (https://devcenter.heroku.com/articles/git)
 
 * **Hunter Goram** - [KueZie](https://github.com/KueZie)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/Team4065/scouting-app/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under the GNUv3 License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the GNUv3 License - see the [LICENSE.md](.github/LICENSE.md) file for details
