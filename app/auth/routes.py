@@ -7,11 +7,8 @@ from ..database import db
 def login():
     if request.method == 'POST':
         pass
-    return render_template(url_for('auth.login'))
+    return render_template('auth/login.html')
 
 @auth.route('/logout')
 def logout():
     return redirect('/')
-
-import os
-print(os.urandom(32).decode('utf8'))

@@ -16,6 +16,3 @@ if not os.path.exists(absolute_path):
 cred = credentials.Certificate(absolute_path)
 app = initialize_app(cred)
 db = firestore.client(app)
-
-print('Name: ')
-print(db.collection('test').document('hello').get().to_dict())
