@@ -15,4 +15,4 @@ if not os.path.exists(absolute_path):
 
 cred = credentials.Certificate(absolute_path)
 app = initialize_app(cred)
-db = firestore.client()
+db = firestore.client(app)
