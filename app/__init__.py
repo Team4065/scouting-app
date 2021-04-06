@@ -7,7 +7,6 @@ from .database import users, get_user_by_email
 from .auth.models import User
 
 dotenv.load_dotenv('.env', verbose=True) # Load environment variables from .env
-dotenv.load_dotenv('.env.prod', verbose=True) # Load production environment variables from .env.prod
 
 def create_app():
     app = Flask(__name__)

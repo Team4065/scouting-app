@@ -4,17 +4,25 @@ from firebase_admin import credentials, firestore, initialize_app
 import dotenv
 from dataclasses import asdict
 import re
+import json
 
 pattern = re.compile('[\\\\/]') # 
 
-path = dotenv.get_key('.env', 'CERTIFICATE_PATH') # Path relative to .env
-path_list = [*pattern.split(os.getcwd()), *pattern.split(path)]
-absolute_path = '\\'.join([x for x in path_list if x]) # Join path and ensure no list indicies are empty strings
+cred = os.environ.get('credentials') # See if credentials are in the environment
 
-if not os.path.exists(absolute_path):
-    raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), absolute_path)
+if cred:
+    cred = json.loads(cred)
+    cred = credentials.Certificate(cred)
+else: 
+    path = dotenv.get_key('.env', 'CERTIFICATE_PATH') # Path relative to .env
+    path_list = [*pattern.split(os.getcwd()), *pattern.split(path)]
+    absolute_path = '\\'.join([x for x in path_list if x]) # Join path and ensure no list indicies are empty strings
 
-cred = credentials.Certificate(absolute_path)
+    if not os.path.exists(absolute_path):
+        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), absolute_path)
+
+    cred = credentials.Certificate(absolute_path)
+
 app = initialize_app(cred)
 db = firestore.client(app)
 
