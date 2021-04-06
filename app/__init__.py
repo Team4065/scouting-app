@@ -2,14 +2,10 @@ from flask import Flask, render_template, url_for
 import os
 import dotenv
 from flask.globals import request
-from flask_login import login_required
-from app.database import db
-from flask_login import LoginManager
-from oauthlib.oauth2 import WebApplicationClient
-from .database import users
+from flask_login import LoginManager, login_required, current_user
+from .database import users, get_user_by_email
+from .auth.validators import get_role
 from .auth.models import User
-# from .auth.validators import is_auth, get_role, user_exists
-import json
 
 dotenv.load_dotenv('.env', verbose=True) # Load environment variables from .env
 dotenv.load_dotenv('.env.prod', verbose=True) # Load production environment variables from .env.prod
@@ -22,15 +18,11 @@ def create_app():
     login_manager = LoginManager()
     login_manager.init_app(app)
 
-    with open('credentials.json') as cred:
-        google_client_id = json.load(cred)
-        client = WebApplicationClient(google_client_id['client_id'])
-
     @app.route('/')
     def index():
-        if is_auth(request_ctx=request):
-            print(get_role(request_ctx=request))
-            return 'You are authorized to view this content.'
+        if current_user.is_authenticated:
+            print(get_role(request))
+            return 'You are authorized to view this content. Click <a href="/auth/logout">here</a> to logout.'
         else:
             return 'You are not authorized to view this content. Click <a href="/auth/login">here</a> to login.'
 
@@ -57,6 +49,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(user_id):
-        return User(**users.document(user_id).get().to_dict())
+        data = get_user_by_email(user_id)
+        return User(**data, authenticated=False)
 
     return app

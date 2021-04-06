@@ -6,7 +6,7 @@ class User:
     uid: str
     email: str
     role: str
-    authenticated: bool
+    authenticated: bool = False
 
     def is_active(self):
         """True, as all users are active."""

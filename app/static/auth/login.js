@@ -16,11 +16,10 @@ var ui = new firebaseui.auth.AuthUI(firebase.auth());
 var uiconfig = {
   callbacks: {
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      authResult.user.getIdToken()
+       authResult.user.getIdToken()
         .then(token => {
-          console.log('Sending auth_token to the server!');
-          console.log(token);
-          fetch('/auth/login', {
+          console.log('Sending auth token to the server!');
+          return fetch('/auth/login', {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -28,9 +27,10 @@ var uiconfig = {
             },
             body: JSON.stringify({auth_token: token})
           })
-          .then(resp => resp.json())
-          .then(json => console.log(json))
-          .catch(err => console.error("Failed to send authentication token to server."));
+          .then(() => {
+            window.location.assign('/');
+          })
+          .catch(err => console.error(`Failed to send authentication token to server. ${err}`));
         });
       return false;
     },
