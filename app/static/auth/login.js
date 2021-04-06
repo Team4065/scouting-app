@@ -16,10 +16,19 @@ var ui = new firebaseui.auth.AuthUI(firebase.auth());
 var uiconfig = {
   callbacks: {
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-      // User successfully signed in.
-      // Return type determines whether we continue the redirect automatically
-      // or whether we leave that to developer to handle.
-      return true;
+      authResult.user.getIdTokenResult()
+        .then(tokenResult => {
+          console.log('Sending auth_token to the server!');
+          fetch('/auth/login', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({auth_token: tokenResult})
+          }).catch(err => console.error("Failed to send authentication token to server."));
+        });
+      return false;
     },
     uiShown: function () {
       // The widget is rendered.

@@ -32,9 +32,8 @@ body {
 }
 
 .login-container > h1 {
-    background: linear-gradient(to left, #666, #333);
-    color: transparent;
-    background-clip: text;
+    color: #333;
+    background-clip:unset;
     margin-top: 1vh;
     width: 75%;
     margin-left: auto;
