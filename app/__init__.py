@@ -50,6 +50,8 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         data = get_user_by_email(user_id)
+        if data is None:
+            return None
         return User(**data, authenticated=False)
 
     return app

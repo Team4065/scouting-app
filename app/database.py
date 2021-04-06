@@ -2,6 +2,7 @@ import os
 import errno
 from firebase_admin import credentials, firestore, initialize_app
 import dotenv
+from dataclasses import asdict
 import re
 
 pattern = re.compile('[\\\\/]') # 
@@ -21,7 +22,12 @@ users = db.collection('users')
 
 def get_user_by_email(email):
     query = users.where('email', '==', email).limit(1)
-    doc = list(query.stream())[0]
+    docs = list(query.stream())
+
+    if len(docs) < 1:
+        return None 
+
+    doc = docs[0]
 
     if not doc.exists:
         return None
@@ -34,9 +40,11 @@ def user_exists(uid):
   return user.exists
 
 def add_user(user):
-    d = user.asdict()
+    print(dir(user))
+    d = asdict(user)
     uid = d['uid']
 
     d.pop('uid', None)
+    d.pop('authenticated', None)
 
-    users.document(d['uid']).set(d)
+    users.document(uid).set(d)
