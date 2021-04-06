@@ -3,6 +3,7 @@ import errno
 from firebase_admin import credentials, firestore, initialize_app
 import dotenv
 import re
+from .auth.models import User
 
 pattern = re.compile('[\\\\/]') # 
 
@@ -18,3 +19,16 @@ app = initialize_app(cred)
 db = firestore.client(app)
 
 users = db.collection('users')
+
+def user_exists(uid):
+  user = users.document(uid).get()
+
+  return user.exists
+
+def add_user(user: User):
+    d = user.asdict()
+    uid = d['uid']
+
+    d.pop('uid', None)
+
+    users.document(d['uid']).set(d)
