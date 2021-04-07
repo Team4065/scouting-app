@@ -17,9 +17,13 @@ def create_app():
     login_manager = LoginManager()
     login_manager.init_app(app)
 
-    @app.route('/')
+    @app.route('/scout')
     def scout():
-        return render_template("scout.html")
+        return ''
+
+    @app.route('/')
+    def index():
+        return render_template('index.html')
 
     @app.route('/about/')
     def about():
