@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',    filename='css/index.css')}}">
+    <title>scouting</title>
+    <link rel="icon" href="icons/Hotend.png">
+</head>
+    <body onload="randomImage()">
+        <nav>
+            <div class="desktopNav">
+                <ul calss="nav">
+                    <li><a href="{{ url_for('scout') }}">Scout</a></li>
+                    <li><a href="{{ url_for('admin') }}">Admin</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <div class="nav-right">
+                        <li><a href="https://github.com/Team4065/" target="_blank">GitHub</a></li>
+                        <li><a href="https://linktr.ee/jet_hend" target="_blank">Website</a><li>
+                        <li class="name">NOP</li>
+                </ul>
+            </div>
+            <div class="phoneNav">
+                <button class="container" onclick="navButton(this)"> 
+                    <ul class="links">
+                        <li><a style="color:transparent;">.</a></li>
+                        <li calss="#"><a href="{{ url_for('scout') }}">Scout</a></li>
+                        <li calss="#"><a href="{{ url_for('admin') }}">Admin</a></li>
+                        <li calss="#"><a href="{{ url_for('about') }}">About</a></li>
+                        <li calss="#"><a href="https://github.com/Team4065/" target="_blank">GitHub</a></li>
+                        <li class="#"><a href="https://linktr.ee/jet_hend" target="_blank">Website</a><li>
+                    </ul>
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </button>
+
+        </nav>
+
+        <h1 class="big">Scout</h1>
+
+        <hr class="bar">
+        <a href="https://www.thebluealliance.com/"><img src="{{url_for('static',    filename='imgs/BAI.png')}}" target="_blank" height="50px" width="50px"></a>
+        <hr class="bar">
+        <br>
+
+        <form>
+            <label for="Tname">Team name:</label><br>
+            <input type="text" id="Tname" name="Tname"><br>
+            <br>
+            <label for="quantity">Something Scored:</label><br>
+            <input type="number" id="quantity" name="quantity">
+            <input type="submit" value="Submit"><br>
+        </form>
+    </body>
+
+    
+
+    <script type="text/javascript" src="{{url_for('static',    filename='js/index.js')}}"></script>
+</html>
