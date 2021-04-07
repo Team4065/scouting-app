@@ -24,7 +24,6 @@ def allow_if(authorized_roles: list[str]):
     @wraps(fn)
     def decorated_view(*args, **kwargs):
       if not (current_user.is_authenticated and current_user.role in authorized_roles):
-        flash('Insuffecient permissions to access this page.')
         return current_app.login_manager.unauthorized()
       return fn(*args, **kwargs)
     return decorated_view

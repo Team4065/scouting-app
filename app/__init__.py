@@ -1,7 +1,8 @@
 from flask import Flask, render_template, url_for
 import os
 import dotenv
-from flask.globals import request
+from flask import redirect
+from flask.helpers import flash
 from flask_login import LoginManager, login_required, current_user
 from .database import users, get_user_by_email
 from .auth.models import User
@@ -31,13 +32,11 @@ def create_app():
 
     @app.route('/admin/')
     @allow_if(['admin'])
-    @login_required
     def admin():
         return render_template("admin.html")
 
     @app.route('/secret')
     @allow_if(['admin'])
-    @login_required
     def secret():
         return 'Secret page!'
 
@@ -63,5 +62,10 @@ def create_app():
         if data is None:
             return None
         return User(**data, authenticated=False)
+    
+    @login_manager.unauthorized_handler
+    def unauthorized():
+        flash('You are not authorized to view that page, redirecting.')
+        return redirect(url_for('index'))
 
     return app
