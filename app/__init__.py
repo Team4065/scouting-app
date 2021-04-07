@@ -18,14 +18,18 @@ def create_app():
     login_manager.init_app(app)
 
     @app.route('/')
-    def index():
-        if current_user.is_authenticated:
-            return f"""You are an {current_user.role}.<br/>You are authorized to view this content.
-                       Click <a href="/auth/logout">here</a> to logout. <br />
-                       <a href="/secret">Secret Page</a>"""
-        else:
-            return """You are not authorized to view this content.
-                      Click <a href="/auth/login">here</a> to login."""
+    def scout():
+        return render_template("scout.html")
+
+    @app.route('/about/')
+    def about():
+        return render_template("about.html")
+
+    @app.route('/admin/')
+    @allow_if(['admin'])
+    @login_required
+    def admin():
+        return render_template("admin.html")
 
     @app.route('/secret')
     @allow_if(['admin'])

@@ -1,8 +1,7 @@
 from firebase_admin import auth
-from flask import current_app
+from flask import current_app, flash
 from functools import wraps
 from flask_login import current_user
-from ..database import users
 
 def get_token_from_context(ctx):
   try:
@@ -24,8 +23,9 @@ def allow_if(authorized_roles: list[str]):
   def decorator(fn):
     @wraps(fn)
     def decorated_view(*args, **kwargs):
-        if current_user.role not in authorized_roles:
-            return current_app.login_manager.unauthorized()
-        return fn(*args, **kwargs)
+      if not (current_user.is_authenticated and current_user.role in authorized_roles):
+        flash('Insuffecient permissions to access this page.')
+        return current_app.login_manager.unauthorized()
+      return fn(*args, **kwargs)
     return decorated_view
   return decorator
