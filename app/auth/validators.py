@@ -1,6 +1,7 @@
 from firebase_admin import auth
-import flask
-from flask.globals import session
+from flask import current_app
+from functools import wraps
+from flask_login import current_user
 from ..database import users
 
 def get_token_from_context(ctx):
@@ -18,3 +19,13 @@ def is_admin(ctx):
   if token and token.get('admin'):
     return True
   return False
+
+def allow_if(authorized_roles: list[str]):
+  def decorator(fn):
+    @wraps(fn)
+    def decorated_view(*args, **kwargs):
+        if current_user.role not in authorized_roles:
+            return current_app.login_manager.unauthorized()
+        return fn(*args, **kwargs)
+    return decorated_view
+  return decorator

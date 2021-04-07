@@ -5,6 +5,7 @@ from flask.globals import request
 from flask_login import LoginManager, login_required, current_user
 from .database import users, get_user_by_email
 from .auth.models import User
+from .auth.validators import allow_if
 
 dotenv.load_dotenv('.env', verbose=True) # Load environment variables from .env
 
@@ -19,11 +20,15 @@ def create_app():
     @app.route('/')
     def index():
         if current_user.is_authenticated:
-            return f'You are an {current_user.role}.<br/>You are authorized to view this content. Click <a href="/auth/logout">here</a> to logout.'
+            return f"""You are an {current_user.role}.<br/>You are authorized to view this content.
+                       Click <a href="/auth/logout">here</a> to logout. <br />
+                       <a href="/secret">Secret Page</a>"""
         else:
-            return 'You are not authorized to view this content. Click <a href="/auth/login">here</a> to login.'
+            return """You are not authorized to view this content.
+                      Click <a href="/auth/login">here</a> to login."""
 
     @app.route('/secret')
+    @allow_if(['admin'])
     @login_required
     def secret():
         return 'Secret page!'
