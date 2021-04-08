@@ -32,11 +32,12 @@ async function getEventKey(city) {
 }
 
 async function loadMatchSchedule() {
-  const eventKey = await getEventKey('Orlando');
-  console.log(eventKey);
+  const eventKey = await getEventKey(global.CURRENT_EVENT_CITY);
 
   const allMatches = await fetchTBA(`/event/${eventKey}/matches/simple`);
-  const qualificationMatches = allMatches.filter(match => match.comp_level === "qm").sort((lhs, rhs) => lhs.match_number > rhs.match_number);
+  const qualificationMatches = allMatches
+                                .filter(match => match.comp_level === "qm")
+                                .sort((lhs, rhs) => lhs.match_number > rhs.match_number);
 
 
   for (match of qualificationMatches) {
@@ -56,13 +57,35 @@ async function loadMatchSchedule() {
   }
 }
 
+async function loadRankings() {
+  const eventKey = await getEventKey(global.CURRENT_EVENT_CITY);
+  
+  const data = await fetchTBA(`/event/${eventKey}/rankings`);
+  const rankings = data.rankings.map(team => [
+    team.rank, // Current Rank
+    team.team_key.substring(3), // Team number
+    team.extra_stats[0] // Ranking Points
+  ]);
+  
+  return rankings;
+}
+
 $(document).ready(() => {
+  $('#currentRankings').DataTable({
+    paging: true,
+    ordering: false,
+    lengthChange: false,
+    ajax: (data, callback, settings) => loadRankings().then(data => callback({ data: data }))
+  })
+
   loadMatchSchedule()
     .then(_ => {
+      // Initialize table after the match schedule is loaded
       $('#matchSchedule').DataTable({
         paging: true,
         ordering: false,
         lengthChange: false
       });
     });
+  loadRankings();
 });
