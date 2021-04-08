@@ -19,11 +19,15 @@ def is_admin(ctx):
     return True
   return False
 
-def allow_if(authorized_roles: list[str]):
+def allow_if(authorized_roles: list[str], flash_user=True):
   def decorator(fn):
     @wraps(fn)
     def decorated_view(*args, **kwargs):
       if not (current_user.is_authenticated and current_user.role in authorized_roles):
+        
+        if flash_user:
+          flash('You are not authorized to view that page, redirecting.')
+
         return current_app.login_manager.unauthorized()
       return fn(*args, **kwargs)
     return decorated_view

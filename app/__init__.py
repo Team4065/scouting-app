@@ -19,26 +19,19 @@ def create_app():
     login_manager.init_app(app)
 
     @app.route('/scout')
+    @allow_if(['scout', 'admin'])
     def scout():
         return ''
 
     @app.route('/')
+    @allow_if(['scout', 'admin'], flash_user=False)
     def index():
         return render_template('index.html')
-
-    @app.route('/about/')
-    def about():
-        return render_template("about.html")
 
     @app.route('/admin/')
     @allow_if(['admin'])
     def admin():
         return render_template("admin.html")
-
-    @app.route('/secret')
-    @allow_if(['admin'])
-    def secret():
-        return 'Secret page!'
 
     from .auth import auth_blueprint
     app.register_blueprint(auth_blueprint)
@@ -65,7 +58,6 @@ def create_app():
     
     @login_manager.unauthorized_handler
     def unauthorized():
-        flash('You are not authorized to view that page, redirecting.')
-        return redirect(url_for('index'))
+        return redirect(url_for('auth.login'))
 
     return app

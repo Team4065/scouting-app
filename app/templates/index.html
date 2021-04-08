@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block title %} Home {% endblock %}
+
 {% block head %}
   {{ super() }}
   <meta charset="utf-8">
@@ -10,14 +12,10 @@
   <title>Bare - Start Bootstrap Template</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-  {{ super() }}
-
   {% include 'navbar.html' %}
-
   <!-- Page Content -->
   <div class="container">
     <div class="row">
@@ -31,12 +29,4 @@
       </div>
     </div>
   </div>
-{% endblock %}
-
-{% block scripts %}
-  {{ super() }}
-  <!-- Bootstrap core JavaScript -->
-  
-  <script src="{{ url_for('static', filename='vendor/jquery/jquery.slim.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 {% endblock %}

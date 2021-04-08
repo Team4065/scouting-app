@@ -16,20 +16,22 @@
 {% endblock %}
 
 {% block content %}
-    <div class="hero-container center-align">
-        <div class="hero-title">
-            <h1>Nerds of Prey</h1>
-            <h1>Scouting</h1>
+<div class="container h-100">
+    <div class="hero-container row text-center mt-5">
+        <div class="hero-title col center">
+            <p class="display-3 text-light font-weight-bold">Nerds of Prey</p>
+            <p class="display-3 text-light font-weight-bold">Scouting</p>
         </div>
     </div>
-    <div class="login-wrapper center-align">
-        <div class="login-container">
-            <h1>Login</h1>
+    <div class="row d-flex justify-content-center mt-5">
+        <div class="login-container bg-light col-lg-4 col-md-8 col-sm-12 text-center p-3">
+            <p class="display-4 text-dark">Login</p>
             <div class="login-divider"></div>
             <div id="firebaseui-auth-container"></div>
             <div id="loader">Loading...</div>
         </div>
     </div>
+</div>
 {% endblock %}
 
 {% block scripts %}

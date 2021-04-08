@@ -1,10 +1,13 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - NOPScouting</title>
-{% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-{% endblock %}
+<head>
+  <title>{% block title %}{% endblock %} - NOPScouting</title>
+  {% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+  {% endblock %}
+</head>
 <section class="content">
   <header>
     {% block header %}{% endblock %}
@@ -15,22 +18,20 @@
     {% block content %}{% endblock %}
 </section>
 {% block scripts %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script
-			  src="https://code.jquery.com/jquery-3.6.0.min.js"
-			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-			  crossorigin="anonymous"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="{{ url_for('static', filename='vendor/jquery/jquery.slim.min.js') }}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script>
-  M.AutoInit();
+  // M.AutoInit();
 
-  let toasts = document.querySelectorAll('.toast-html');
+  // let toasts = document.querySelectorAll('.toast-html');
 
-  toasts.forEach(el => {
-    M.toast({
-       html: el.innerHTML,
-       classes: "red lighten-1"
-    });
-  })
+  // toasts.forEach(el => {
+  //   M.toast({
+  //      html: el.innerHTML,
+  //      classes: "red lighten-1"
+  //   });
+  // })
 </script>
 
 {% endblock %}

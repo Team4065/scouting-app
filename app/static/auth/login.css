@@ -8,37 +8,6 @@ body {
     background: linear-gradient(to bottom right, #333, #37474f);
 }
 
-.hero-container {
-    font-family: 'B612', sans-serif;
-    color: white;
-}
-
-.hero-title {
-    margin: 15vh 0 5vh 0;
-}
-
-.hero-title > h1 {
-    font-weight: bold;
-    font-size: 72px;
-    padding: 0;
-    margin: 0;
-}
-
-.login-container {
-    margin-top: 5vh;
-    width: 20vw;
-    padding: 16px;
-    background-color: rgba(255, 255, 255, 0.76);
-}
-
-.login-container > h1 {
-    color: #333;
-    background-clip:unset;
-    margin-top: 1vh;
-    width: 75%;
-    margin-left: auto;
-    margin-right: auto;
-}
 
 .login-divider {
     height: 1px;
@@ -46,9 +15,4 @@ body {
     background: gray;
     padding: 0.001px;
     margin: 20px auto 40px auto;
-}
-
-.login-wrapper {
-    display: flex;
-    justify-content: center;
 }
