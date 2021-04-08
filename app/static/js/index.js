@@ -39,19 +39,28 @@ async function loadMatchSchedule() {
                                 .filter(match => match.comp_level === "qm")
                                 .sort((lhs, rhs) => lhs.match_number > rhs.match_number);
 
-
   for (match of qualificationMatches) {
     const red = match.alliances.red;
     const blue = match.alliances.blue;
+
+    const redWin = match.winning_alliance === "red";
+    const blueWin = match.winning_alliance === "blue";
+
+    const redColor = redWin ? "#fc9292" : "#ffcccb";
+    const blueColor = blueWin ? "#7db5d4" : "#add8e6";
+
+    const redClass = redWin ? "font-weight-bold" : "";
+    const blueClass = blueWin ? "font-weight-bold" : "";
+
     $('#matchSchedule tbody').append(`
     <tr>
       <th scope="row">${match.match_number}</th>
-      <td style="background-color: #ffcccb;">${red.team_keys[0].substring(3)}</td>
-      <td style="background-color: #ffcccb;">${red.team_keys[1].substring(3)}</td>
-      <td style="background-color: #ffcccb;">${red.team_keys[2].substring(3)}</td>
-      <td style="background-color: #add8e6;">${blue.team_keys[0].substring(3)}</td>
-      <td style="background-color: #add8e6;">${blue.team_keys[1].substring(3)}</td>
-      <td style="background-color: #add8e6;">${blue.team_keys[2].substring(3)}</td>
+      <td class="${redClass}" style="background-color: ${redColor};">${red.team_keys[0].substring(3)}</td>
+      <td class="${redClass}" style="background-color: ${redColor};">${red.team_keys[1].substring(3)}</td>
+      <td class="${redClass}" style="background-color: ${redColor};">${red.team_keys[2].substring(3)}</td>
+      <td class="${blueClass}" style="background-color: ${blueColor};">${blue.team_keys[0].substring(3)}</td>
+      <td class="${blueClass}" style="background-color: ${blueColor};">${blue.team_keys[1].substring(3)}</td>
+      <td class="${blueClass}" style="background-color: ${blueColor};">${blue.team_keys[2].substring(3)}</td>
     </tr>
     `);
   }
@@ -75,6 +84,8 @@ $(document).ready(() => {
     paging: true,
     ordering: false,
     lengthChange: false,
+    columnDefs: [{targets: 0, cellType: "th"}],
+    info: false,
     ajax: (data, callback, settings) => loadRankings().then(data => callback({ data: data }))
   })
 
