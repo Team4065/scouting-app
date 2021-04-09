@@ -24,7 +24,6 @@ def login():
 
         if not user_exists(decoded_token['uid']):
             add_user(user)
-            print('Adding user')
 
 
         expires_in = datetime.timedelta(days=1)

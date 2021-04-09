@@ -27,7 +27,7 @@ var uiconfig = {
             },
             body: JSON.stringify({auth_token: token})
           })
-          .then(() => {
+          .then(data => {
             window.location.assign('/');
           })
           .catch(err => console.error(`Failed to send authentication token to server. ${err}`));

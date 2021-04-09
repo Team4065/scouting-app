@@ -10,6 +10,8 @@ def register_blueprints(app):
   app.register_blueprint(auth_blueprint)
   from .api import api_blueprint
   app.register_blueprint(api_blueprint)
+  from .admin import admin_blueprint
+  app.register_blueprint(admin_blueprint)
 
 def register_login_manager(app):
 

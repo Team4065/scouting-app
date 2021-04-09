@@ -21,7 +21,7 @@ def create_app():
         return ''
 
     @app.route('/')
-    @allow_if(['scout', 'admin'], flash_user=False)
+    @allow_if(['default', 'scout', 'admin'], flash_user=False)
     def index():
         return render_template('index.html')
 
