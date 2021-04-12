@@ -1,12 +1,12 @@
 const page = getPathAsArray(window.location.pathname);
 const navLinks = Array.from(document.querySelectorAll('.nav-link'));
 
-const possibleMatches = ["admin"]
+const possibleMatches = ["admin", "scout"]
 
 for (match of possibleMatches) {
-  if (page.includes("admin")){
+  if (page.includes(match)){
     navLinks.forEach(nav => {
-      if (nav.dataset.link === "admin")
+      if (nav.dataset.link === match)
         nav.classList.add('active');
     })
   }
