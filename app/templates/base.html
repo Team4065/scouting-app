@@ -8,30 +8,32 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
   {% endblock %}
 </head>
-<section class="content">
+<div class="content">
   <header>
     {% block header %}{% endblock %}
   </header>
+  {% block content %}{% endblock %}
+  <div class="toast-container">
     {% for message in get_flashed_messages() %}
-      <div class="toast-html hide">{{ message }}</div>
+    <div class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true"data-delay="5000">
+      <div class="d-flex">
+        <div class="toast-body">
+          {{ message }}
+        </div>
+      </div>
+    </div>
     {% endfor %}
-    {% block content %}{% endblock %}
-</section>
+  </div>
+</div>
 {% block scripts %}
 <!-- Bootstrap core JavaScript -->
 <script src="{{ url_for('static', filename='vendor/jquery/jquery.slim.min.js') }}"></script>
 <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
 <script>
-  // M.AutoInit();
-
-  // let toasts = document.querySelectorAll('.toast-html');
-
-  // toasts.forEach(el => {
-  //   M.toast({
-  //      html: el.innerHTML,
-  //      classes: "red lighten-1"
-  //   });
-  // })
+  $(() => {
+    $('.toast').toast('show');
+  });
   const global = {
     TBA_AUTH_KEY: '1wEa7XYecmJl8VN26q10hP05vkq8vyLkjdXfTW3T3h6oQ40DetUlL7z78HlBnhnQ',
     CURRENT_EVENT_CITY: 'Orlando'
