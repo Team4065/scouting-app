@@ -1,5 +1,5 @@
 from flask import redirect, url_for
-from flask_login import LoginManager, login_manager
+from flask_login import LoginManager, login_manager, current_user
 import os
 
 from .database import get_user_by_email
@@ -12,6 +12,8 @@ def register_blueprints(app):
   app.register_blueprint(api_blueprint)
   from .admin import admin_blueprint
   app.register_blueprint(admin_blueprint)
+  from .scout import scout_blueprint
+  app.register_blueprint(scout_blueprint)
 
 def register_login_manager(app):
 
@@ -27,6 +29,8 @@ def register_login_manager(app):
     
   @login_manager.unauthorized_handler
   def unauthorized():
+    if current_user.is_authenticated:
+      return redirect(url_for('index'))
     return redirect(url_for('auth.login'))
 
 def register_url_additions(app):
