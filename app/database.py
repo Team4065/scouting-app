@@ -6,6 +6,8 @@ from dataclasses import asdict
 import re
 import json
 
+from flask.json import jsonify
+
 pattern = re.compile('[\\\\/]') # 
 
 cred = os.environ.get('credentials') # See if credentials are in the environment
@@ -26,10 +28,10 @@ else:
 app = initialize_app(cred)
 db = firestore.client(app)
 
-users = db.collection('users')
+users_ref = db.collection('users')
 
 def get_user_by_email(email):
-    query = users.where('email', '==', email).limit(1)
+    query = users_ref.where('email', '==', email).limit(1)
     docs = list(query.stream())
 
     if len(docs) < 1:
@@ -42,8 +44,20 @@ def get_user_by_email(email):
     
     return {**doc.to_dict(), 'uid': doc.id}
 
+def get_users_by_role(role):
+    query = users_ref.where('role', '==', role)
+    users = list(
+        map(
+            lambda u: u.to_dict(),
+            list(query.stream())
+        )
+    ) # Convert list of firestore.DocumentSnapshot to a list of dictionaries
+
+
+    return users
+
 def user_exists(uid):
-  user = users.document(uid).get()
+  user = users_ref.document(uid).get()
 
   return user.exists
 
@@ -55,4 +69,4 @@ def add_user(user):
     d.pop('uid', None)
     d.pop('authenticated', None)
 
-    users.document(uid).set(d)
+    users_ref.document(uid).set(d)
