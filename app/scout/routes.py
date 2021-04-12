@@ -6,4 +6,4 @@ from . import scout_blueprint as scout
 @scout.route('/')
 @allow_if(['scout'])
 def dashboard():
-  return render_template('scout.html')
+  return render_template('scout/dashboard.html')
