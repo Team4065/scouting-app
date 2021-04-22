@@ -14,8 +14,8 @@ async function fetchTBA(endpoint) {
   return data;
 }
 
-async function getEventKey(city) {
-  const data = await fetchTBA('/events/2019/simple');
+async function fetchEventKey(city) {
+  const data = await fetchTBA('/events/2021/simple');
   const eventMatch = data.filter(event => event.city === city);
   
   if (eventMatch.length > 1) {
@@ -32,12 +32,12 @@ async function getEventKey(city) {
 }
 
 async function loadMatchSchedule() {
-  const eventKey = await getEventKey(global.CURRENT_EVENT_CITY);
+  const eventKey = await fetchEventKey(global.CURRENT_EVENT_CITY);
 
   const allMatches = await fetchTBA(`/event/${eventKey}/matches/simple`);
   const qualificationMatches = allMatches
-                                .filter(match => match.comp_level === "qm")
-                                .sort((lhs, rhs) => lhs.match_number > rhs.match_number);
+                                ?.filter(match => match.comp_level === "qm")
+                                .sort((lhs, rhs) => lhs.match_number > rhs.match_number) || [];
 
   for (match of qualificationMatches) {
     const red = match.alliances.red;
@@ -67,14 +67,16 @@ async function loadMatchSchedule() {
 }
 
 async function loadRankings() {
-  const eventKey = await getEventKey(global.CURRENT_EVENT_CITY);
+  const eventKey = await fetchEventKey(global.CURRENT_EVENT_CITY);
   
   const data = await fetchTBA(`/event/${eventKey}/rankings`);
-  const rankings = data.rankings.map(team => [
+  console.log(data);
+  const rankings = data.rankings?.map(team => [
     team.rank, // Current Rank
     team.team_key.substring(3), // Team number
     team.extra_stats[0] // Ranking Points
-  ]);
+  ]) || [];
+  console.log(rankings);
   
   return rankings;
 }
@@ -86,6 +88,9 @@ $(document).ready(() => {
     lengthChange: false,
     columnDefs: [{targets: 0, cellType: "th"}],
     info: false,
+    language: {
+      emptyTable: "No rankings data available. . ."
+    },
     ajax: (data, callback, settings) => loadRankings().then(data => callback({ data: data }))
   })
 
@@ -95,7 +100,10 @@ $(document).ready(() => {
       $('#matchSchedule').DataTable({
         paging: true,
         ordering: false,
-        lengthChange: false
+        lengthChange: false,
+        language: {
+          emptyTable: "No match data available. . ."
+        }
       });
     });
   loadRankings();

@@ -1,1 +1,45 @@
 {% extends 'scout/scout_base.html' %}
+
+{% block head %}
+  {{ super() }}
+
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+<div class="row">
+  {% include 'scout/scout_sidebar.html' %}
+  <form class="col-md-4 p-5">
+    <div class="row">
+      <div class="w-50 mb-3">
+        <label class="form-label">Team Number</label>
+        <input type="number" class="form-control" id="inputTeamNumber">
+      </div>
+    </div>
+    <div class="row">
+      <label class="mr-3">Autonomous</label>
+      <label class="switch">
+        <input type="checkbox" id="autoCheckbox">
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div class="row d-none" id="autoContent">
+      ADASDASD
+    </div>
+    <div class="row">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts%}
+{{ super() }}
+<script>
+  $(() => {
+    $('#autoCheckbox').on('click', function (){
+      $('#autoContent').toggleClass('d-none');
+    })
+  })
+</script>
+{% endblock %}
