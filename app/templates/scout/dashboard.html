@@ -19,11 +19,11 @@
     <div class="row">
       <label class="mr-3">Autonomous</label>
       <label class="switch">
-        <input type="checkbox" id="autoCheckbox">
+        <input type="checkbox" data-toggle="auto">
         <span class="slider round"></span>
       </label>
     </div>
-    <div class="row d-none" id="autoContent">
+    <div class="row d-none" data-attr="auto">
       ADASDASD
     </div>
     <div class="row">
@@ -37,9 +37,22 @@
 {{ super() }}
 <script>
   $(() => {
-    $('#autoCheckbox').on('click', function (){
-      $('#autoContent').toggleClass('d-none');
-    })
+    $('input[type="checkbox"][data-toggle]')
+      .each(function(idx, el) {
+        // Ensure each element is in a known state; subject to the togglers checked status
+        const attr = $(el).attr('data-toggle');
+        const children = $(`[data-attr=${attr}]`).each(function(idx, child) {
+          // If checked but child isn't visible
+          if (el.checked === $(child).hasClass('d-none'))
+            $(child).toggleClass('d-none');
+        });
+      })
+      .on('click', function (evt){
+        const attr = $(evt.target).attr('data-toggle');
+        $(`[data-attr=${attr}]`).toggleClass('d-none');
+        console.log('a')
+      });
+
   })
 </script>
 {% endblock %}
