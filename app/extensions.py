@@ -1,5 +1,7 @@
 from flask import redirect, url_for
 from flask_login import LoginManager, login_manager, current_user
+from .flask_logs import LogSetup
+
 import os
 
 from .database import get_user_by_email
@@ -50,3 +52,4 @@ def register_extensions(app):
   register_login_manager(app)
   register_blueprints(app)
   register_url_additions(app)
+  LogSetup(app)

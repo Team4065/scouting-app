@@ -9,22 +9,42 @@
 {{ super() }}
 <div class="row">
   {% include 'scout/scout_sidebar.html' %}
-  <form class="col-md-4 p-5">
+  <form class="col-md-4 p-5" id="scout-form">
     <div class="row">
       <div class="w-50 mb-3">
         <label class="form-label">Team Number</label>
-        <input type="number" class="form-control" id="inputTeamNumber">
+        <input name="team_number" type="number" class="form-control" id="inputTeamNumber">
       </div>
     </div>
     <div class="row">
       <label class="mr-3">Autonomous</label>
       <label class="switch">
-        <input type="checkbox" data-toggle="auto">
+        <input name="hasAutonomous" type="checkbox" data-toggle="auto">
         <span class="slider round"></span>
       </label>
     </div>
     <div class="row d-none" data-attr="auto">
-      ADASDASD
+      <div class="col">
+        <div class="row">
+          <div class="w-50 mb-3">
+            <label class="form-label">Autonomous Points</label>
+            <input name="autonomous_points" type="number" class="form-control" id="inputTeamNumber">
+          </div>
+        </div>
+        <div class="row">
+          <label class="mr-3">Crossed line</label>
+          <label class="switch">
+            <input name="didCrossLine" type="checkbox">
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="w-50 mb-3">
+        <label name="telep_points" class="form-label">Teleop. Points</label>
+        <input type="number" class="form-control" id="inputTeamNumber">
+      </div>
     </div>
     <div class="row">
       <button type="submit" class="btn btn-primary">Submit</button>
