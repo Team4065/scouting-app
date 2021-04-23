@@ -16,7 +16,7 @@ var ui = new firebaseui.auth.AuthUI(firebase.auth());
 var uiconfig = {
   callbacks: {
     signInSuccessWithAuthResult: function (authResult, redirectUrl) {
-       authResult.user.getIdToken()
+       firebase.auth().currentUser.getIdToken(true)
         .then(token => {
           console.log('Sending auth token to the server!');
           return fetch('/auth/login', {
