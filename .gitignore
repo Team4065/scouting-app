@@ -1,7 +1,0 @@
-# Python generated code
-__pycache__/
-*.py[cod]
-
-# Sensitive files
-credentials.json
-.env.prod
