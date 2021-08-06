@@ -1,0 +1,5 @@
+# IDE-specific files
+**/.idea/
+**/.idea/*
+# Venv files (specific to initializing host)
+venv/
